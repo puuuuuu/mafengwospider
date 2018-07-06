@@ -9,6 +9,7 @@ import scrapy
 
 
 class MafengwospiderItem(scrapy.Item):
-    # define the fields for your item here like:
-    # name = scrapy.Field()
-    pass
+
+    title = scrapy.Field()
+    public_time = scrapy.Field()
+    article = scrapy.Field()
