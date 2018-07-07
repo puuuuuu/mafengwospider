@@ -3,8 +3,10 @@
 import json
 import re
 
+from bs4 import BeautifulSoup
 from scrapy import Request, Selector
 from scrapy.spiders import Spider
+import lxml
 
 from mafengwospider.items import MafengwospiderItem
 
@@ -55,10 +57,29 @@ class TravelStrategy(Spider):
         item['area_name'] = response.meta.get('area_name')
         item['title'] = res.xpath('//div[@class="l-topic"]/h1/text()').extract()[0]
         item['public_time'] = res.xpath('//div[@class="l-topic"]/div[1]/span[2]/em/text()').extract()[0]
-        topic = res.xpath('//div[@class="l-topic"]').extract()[0]
-        user_info = res.xpath('//div[@class="user_list"]').extract()[0]
-        topic_new = topic.replace(user_info, '')
-        content = res.xpath('//div[@class="_j_content"]').extract()[0]
-        new_html = topic_new + content
+        soup = BeautifulSoup(response.text, 'lxml')
+        html = str(soup)  # 获取整个网页源码
+        header_html = str(soup.find('div', attrs={'id': 'header'}))
+        new_html = html.replace(header_html, '')  # 去掉页面导航头
+        crumb_html = str(soup.find('div', attrs={'class': 'crumb'}))
+        new_html = new_html.replace(crumb_html, '')  # 去掉页面层级关系导航
+        user_list_html = str(soup.find('div', attrs={'class': 'user_list'}))
+        new_html = new_html.replace(user_list_html, '')  # 去掉作者信息
+        section_from_s_html = str(soup.find('div', attrs={'class': 'section_from_s'}))
+        new_html = new_html.replace(section_from_s_html, '')  # 去掉开头出处信息
+        reader_num_html = str(soup.select('.sub-tit > span')[0])
+        new_html = new_html.replace(reader_num_html, '')  # 去掉阅读数信息
+        bar_sar_html = str(soup.find('div', attrs={'class': 'bar-sar'}))
+        new_html = new_html.replace(bar_sar_html, '')  # 去掉点赞信息
+        section_from_e_html = str(soup.find('div', attrs={'class': 'section_from_e'}))
+        new_html = new_html.replace(section_from_e_html, '')  # 去掉文末出处信息
+        m_t_20_html = str(soup.find('div', attrs={'class': 'm_t_20'}))
+        new_html = new_html.replace(m_t_20_html, '')  # 去掉文末版权信息
+        l_comment_html = str(soup.find('div', attrs={'class': 'l-comment'}))
+        new_html = new_html.replace(l_comment_html, '')  # 去掉评论系统
+        ft_content_html = str(soup.find('div', attrs={'class': 'ft-content'}))
+        new_html = new_html.replace(ft_content_html, '')  # 去掉页脚信息
+        new_html = new_html.replace('\n', ' ')
+
         item['article_html'] = new_html
         yield item
