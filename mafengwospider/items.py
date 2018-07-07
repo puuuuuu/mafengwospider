@@ -10,6 +10,10 @@ import scrapy
 
 class MafengwospiderItem(scrapy.Item):
 
+    country_name = scrapy.Field()
+    country_id = scrapy.Field()
+    area_name = scrapy.Field()
     title = scrapy.Field()
     public_time = scrapy.Field()
-    article = scrapy.Field()
+    article_html = scrapy.Field()
+
