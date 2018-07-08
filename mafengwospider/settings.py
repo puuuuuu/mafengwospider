@@ -8,6 +8,7 @@
 #     https://doc.scrapy.org/en/latest/topics/settings.html
 #     https://doc.scrapy.org/en/latest/topics/downloader-middleware.html
 #     https://doc.scrapy.org/en/latest/topics/spider-middleware.html
+from mafengwospider.set_IPPOOL import set_ip_pool
 
 BOT_NAME = 'mafengwospider'
 
@@ -52,9 +53,11 @@ ROBOTSTXT_OBEY = False
 
 # Enable or disable downloader middlewares
 # See https://doc.scrapy.org/en/latest/topics/downloader-middleware.html
-# DOWNLOADER_MIDDLEWARES = {
-#    'mafengwospider.middlewares.MafengwospiderDownloaderMiddleware': 543,
-# }
+DOWNLOADER_MIDDLEWARES = {
+    'mafengwospider.middlewares.MafengwospiderDownloaderMiddleware': 543,
+    'scrapy.contrib.downloadermiddleware.httpproxy.HttpProxyMiddleware': 543,
+    'mafengwospider.middlewares.MafengwospiderSpiderMiddleware': 125
+}
 
 # Enable or disable extensions
 # See https://doc.scrapy.org/en/latest/topics/extensions.html
@@ -65,7 +68,7 @@ ROBOTSTXT_OBEY = False
 # Configure item pipelines
 # See https://doc.scrapy.org/en/latest/topics/item-pipeline.html
 ITEM_PIPELINES = {
-   'mafengwospider.pipelines.MafengwospiderPipeline': 300,
+    'mafengwospider.pipelines.MafengwospiderPipeline': 300,
     'mafengwospider.pipelines.SaveData': 301
 }
 
@@ -94,3 +97,5 @@ MONGODB_HOST = '127.0.0.1'
 MONGODB_PORT = 27017
 MONGODB_DB = 'mafengwo'
 MONGODB_COLLECTION = 'free_play'
+
+IPPOOL = set_ip_pool()
