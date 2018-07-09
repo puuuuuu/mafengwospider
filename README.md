@@ -5,9 +5,51 @@
 
 ### 1.1 该项目相关包列表
 
-    Twisted(手动安装)
-    scrapy
-    pywin32
+    aiohttp==3.3.2
+	asn1crypto==0.24.0
+	async-timeout==3.0.0
+	attrs==18.1.0
+	Automat==0.7.0
+	beautifulsoup4==4.6.0
+	certifi==2018.4.16
+	cffi==1.11.5
+	chardet==3.0.4
+	constantly==15.1.0
+	cryptography==2.2.2
+	cssselect==1.0.3
+	Django==2.0.6
+	hyperlink==18.0.0
+	idna==2.7
+	idna-ssl==1.0.1
+	image==1.5.24
+	incremental==17.5.0
+	lxml==4.2.2
+	multidict==4.3.1
+	parsel==1.4.0
+	Pillow==5.2.0
+	pyasn1==0.4.3
+	pyasn1-modules==0.2.2
+	pycparser==2.18
+	PyDispatcher==2.0.5
+	pymongo==3.7.0
+	PyMySQL==0.8.1
+	pyOpenSSL==18.0.0
+	pytz==2018.5
+	pywin32==223
+	queuelib==1.5.0
+	redis==2.10.6
+	requests==2.19.1
+	Scrapy==1.5.0
+	scrapy-redis==0.6.8
+	selenium==3.12.0
+	service-identity==17.0.0
+	six==1.11.0
+	Twisted==18.4.0
+	urllib3==1.23
+	w3lib==1.19.0
+	yarl==1.2.6
+	zope.interface==4.5.0
+
 
 ### 1.2 安装相关包需要注意的项
 
