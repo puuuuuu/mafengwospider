@@ -88,14 +88,3 @@ class Proxies(object):
                     new_queue.put(proxy)
             except:
                 print('fail %s' % proxy)
-
-
-if __name__ == '__main__':
-    a = Proxies()
-    a.verify_proxies()
-    print(a.proxies)
-    proxie = a.proxies
-    with open('proxies.txt', 'a') as f:
-        for proxy in proxie:
-            new_proxy = proxy.split('//')[-1]
-            f.write(new_proxy + '\n')

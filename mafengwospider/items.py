@@ -10,10 +10,10 @@ import scrapy
 
 class MafengwospiderItem(scrapy.Item):
 
-    country_name = scrapy.Field()
-    country_id = scrapy.Field()
-    area_name = scrapy.Field()
-    title = scrapy.Field()
-    public_time = scrapy.Field()
-    article_html = scrapy.Field()
+    country_name = scrapy.Field()  # 城市名称
+    country_id = scrapy.Field()  # 城市id
+    area_name = scrapy.Field()  # 大洲名称
+    title = scrapy.Field()  # 攻略标题
+    public_time = scrapy.Field()  # 发表时间
+    article_html = scrapy.Field()  # 文章文档页面
 
