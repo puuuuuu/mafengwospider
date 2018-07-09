@@ -8,7 +8,7 @@
 #     https://doc.scrapy.org/en/latest/topics/settings.html
 #     https://doc.scrapy.org/en/latest/topics/downloader-middleware.html
 #     https://doc.scrapy.org/en/latest/topics/spider-middleware.html
-from mafengwospider.set_IPPOOL import set_ip_pool
+
 
 BOT_NAME = 'mafengwospider'
 
@@ -98,4 +98,4 @@ MONGODB_PORT = 27017
 MONGODB_DB = 'mafengwo'
 MONGODB_COLLECTION = 'free_play'
 
-IPPOOL = set_ip_pool()
+

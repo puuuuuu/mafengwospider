@@ -9,8 +9,6 @@ import random
 
 from scrapy import signals
 
-from mafengwospider.settings import IPPOOL
-
 
 class MafengwospiderSpiderMiddleware(object):
     # Not all methods need to be defined. If a method is not defined,
@@ -21,9 +19,12 @@ class MafengwospiderSpiderMiddleware(object):
         self.ip = ip
 
     def process_request(self, request, spider):
-        thisip = random.choice(IPPOOL)
-        print('this is ip:' + thisip['ipaddr'])
-        request.meta['proxy'] = 'http://' + thisip['ipaddr']
+        with open('mafengwospider/proxies.txt', 'r') as f:
+            ip_list = f.readlines()
+            ip = [eval(ip.replace('\n', '')) for ip in ip_list]
+            thisip = random.choice(ip)
+            print('当前使用代理IP为:' + thisip['ipaddr'])
+            request.meta['proxy'] = 'http://' + thisip['ipaddr']
 
     @classmethod
     def from_crawler(cls, crawler):

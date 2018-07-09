@@ -82,8 +82,6 @@
 	MONGODB_PORT = 27017
 	MONGODB_DB = 'mafengwo'
 	MONGODB_COLLECTION = 'free_play'
-	
-	IPPOOL = set_ip_pool()
 
 ### 2.3 travel_strategy.py
 
@@ -249,7 +247,7 @@
 
 ### 2.6 middlewares.py
 
-重写process_request方法，向request中加入代理ip
+重写process_request方法，向request中加入代理ip,代理ip从proxies.txt文件中去读取
 	
 	class MafengwospiderSpiderMiddleware(object):
 	    # Not all methods need to be defined. If a method is not defined,
@@ -260,13 +258,16 @@
 	        self.ip = ip
 	
 	    def process_request(self, request, spider):
-	        thisip = random.choice(IPPOOL)
-	        print('this is ip:' + thisip['ipaddr'])
-	        request.meta['proxy'] = 'http://' + thisip['ipaddr']
+	        with open('mafengwospider/proxies.txt', 'r') as f:
+	            ip_list = f.readlines()
+	            ip = [eval(ip.replace('\n', '')) for ip in ip_list]
+	            thisip = random.choice(ip)
+	            print('当前使用代理IP为:' + thisip['ipaddr'])
+	            request.meta['proxy'] = 'http://' + thisip['ipaddr']
 
 ### 2.7 proxies.py
 
-定义类从ip代理网站爬取代理ip、校验ip的可用性并返回
+定义类从ip代理网站爬取代理ip、校验ip的可用性
 
 	# *-* coding:utf-8 *-*
 	
@@ -359,24 +360,19 @@
 	            except:
 	                print('fail %s' % proxy)
 
-### 2.8 set_IPPOOL.py
 
-设置ip代理地址池
-
-	from mafengwospider.proxies import Proxies
+	if __name__ == '__main__':
 	
-	
-	def set_ip_pool():
 	    a = Proxies()
 	    a.verify_proxies()
 	    print(a.proxies)
 	    proxie = a.proxies
-	    ip_pool = []
 	    for proxy in proxie:
 	        proxy_new = proxy.split('//')[-1]
 	        ip = {'ipaddr': proxy_new}
-	        ip_pool.append(ip)
-	    return ip_pool
+	        with open('proxies.txt', 'a') as f:
+	            f.write(str(ip) + '\n')
+
 
 
 

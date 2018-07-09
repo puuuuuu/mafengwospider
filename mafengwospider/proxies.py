@@ -1,10 +1,9 @@
 # *-* coding:utf-8 *-*
-
+import requests
 from bs4 import BeautifulSoup
 import lxml
 from multiprocessing import Process, Queue
 import random
-import requests
 
 
 class Proxies(object):
@@ -88,3 +87,16 @@ class Proxies(object):
                     new_queue.put(proxy)
             except:
                 print('fail %s' % proxy)
+
+
+if __name__ == '__main__':
+
+    a = Proxies()
+    a.verify_proxies()
+    print(a.proxies)
+    proxie = a.proxies
+    for proxy in proxie:
+        proxy_new = proxy.split('//')[-1]
+        ip = {'ipaddr': proxy_new}
+        with open('proxies.txt', 'a') as f:
+            f.write(str(ip) + '\n')
